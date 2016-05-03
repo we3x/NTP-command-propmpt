@@ -1,5 +1,7 @@
+import java.io.File;
+
 public class Actions{
-    private String path = "~";
+    private String path = "/home/wex/";
 
     public void cd(){
         System.out.println("Change dir without params");
@@ -10,7 +12,15 @@ public class Actions{
     }
 
     public void dir(){
-        System.out.println("show all files and folders");
+        File folder = new File(path);
+        File[] listOfFiles = folder.listFiles();
+        for (int i = 0; i < listOfFiles.length; i++) {
+            if (listOfFiles[i].isFile()) {
+                System.out.println(listOfFiles[i].getName());
+            } else if (listOfFiles[i].isDirectory()) {
+                System.out.println(listOfFiles[i].getName() + "/");
+            }
+        }
     }
 
     public void zip(String name,String arhiveName){

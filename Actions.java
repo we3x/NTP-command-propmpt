@@ -1,14 +1,18 @@
 import java.io.File;
 
 public class Actions{
-    private String path = "/home/wex/";
+    private String path;
 
-    public void cd(){
-        System.out.println("Change dir without params");
+    public Actions(){
+        this.path = "/home/";
     }
 
+
     public void cd(String dir){
-        System.out.println("change dir to with" + dir);
+        if(dir.charAt(0) == '/')
+            this.path = dir;
+        else
+            this.path = this.path + dir + '/';
     }
 
     public void dir(){
@@ -32,5 +36,9 @@ public class Actions{
 
     public void copy(String name){
         System.out.println("Copyng... " + name);
+    }
+
+    public String getPath(){
+        return this.path;
     }
 }

@@ -8,15 +8,15 @@ class CommandPrompt {
         Actions dispatch = new Actions();
         while(true){
             try {
-                System.out.print(">");
+                System.out.print(dispatch.getPath() + " >");
                 s = in.readLine();
                 String[] params = s.split("[ ]");
                 if(s.equals("exit"))
                     return;
                 else if (params[0].equals("cd")){
-                    dispatch.cd();
+                    dispatch.cd(params[1]);
                 }
-                else if (params[0].equals("dir")){
+                else if (params[0].equals("ls")){
                     dispatch.dir();
                 }
                 else if (params[0].equals("zip")){

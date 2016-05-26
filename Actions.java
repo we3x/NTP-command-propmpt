@@ -1,7 +1,11 @@
-import java.io.File;
+import java.io.*;
+import java.util.zip.*;
 
 public class Actions{
     private String path;
+    private static final int BUFFER_LENGTH = 1024;
+    private static final int MAX_FILE_LENGTH = 65536;
+
 
     public Actions(){
         this.path = "/home/";
@@ -27,7 +31,7 @@ public class Actions{
         }
     }
 
-    public void zip(String name,String arhiveName){
+    public void zip(String name,String archiveName){
         byte[] buffer = new byte [BUFFER_LENGTH];
         try {
             ZipOutputStream out = new ZipOutputStream(new FileOutputStream(path + "/" + archiveName));
@@ -45,7 +49,22 @@ public class Actions{
 
     }
     public void unzip(String name){
-        System.out.println("Unzip... " + name);
+        byte[] buffer = new byte [BUFFER_LENGTH];
+        try {
+            ZipInputStream in = new ZipInputStream(new FileInputStream(path + "/" + name));
+            FileOutputStream out;
+            ZipEntry zipEntry;
+            while ((zipEntry = in.getNextEntry()) != null) {
+                out = new FileOutputStream(path + "/" + zipEntry.getName());
+                int read;
+                while ((read = in.read(buffer, 0, BUFFER_LENGTH)) != -1)
+                    out.write(buffer);
+                out.close();
+            }
+            in.close();
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     public void copy(String name){

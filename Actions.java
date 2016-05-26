@@ -28,7 +28,21 @@ public class Actions{
     }
 
     public void zip(String name,String arhiveName){
-        System.out.println("Ziping... " + name +" to " + arhiveName);
+        byte[] buffer = new byte [BUFFER_LENGTH];
+        try {
+            ZipOutputStream out = new ZipOutputStream(new FileOutputStream(path + "/" + archiveName));
+            BufferedInputStream fin = new BufferedInputStream(new FileInputStream(path + "/" + name));
+            out.putNextEntry(new ZipEntry(name));
+            int read;
+            while ((read = fin.read(buffer, 0, BUFFER_LENGTH)) != -1) {
+                out.write(buffer, 0, read);
+            }
+            out.close();
+            fin.close();
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        }
+
     }
     public void unzip(String name){
         System.out.println("Unzip... " + name);
